@@ -29,7 +29,8 @@ client.on('message', async message => {
         message.channel.send(res_arr[Math.floor(Math.random() * res_arr.length)])
     }
     else if (message.channel.type == 'dm' && message.author.id == ownerID) {
-        const args = message.content.trim().split(/ +/g).shift();
+        const args = message.content.trim().split(/ +/g);
+        args.shift();
         if (message.content.toLowerCase().startsWith('eval')) {
             const { inspect } = require('util');
             const { stripIndents } = require('common-tags')
