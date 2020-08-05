@@ -60,8 +60,12 @@ client.on('message', async message => {
     else if (message.channel.id == setupchannelID) {
         if (message.content.includes(':')) {
             let args = message.content.split(':');
+            if (args.length !== 2) {
+                message.channel.send('Nhập theo cú pháp: `trigger:response` để setup');
+                return await message.react('❌');
+            }
             let trigger = args[0].toLowerCase().trim();
-            let response = args[1].trim()
+            let response = args[1].trim();
             if (db.has(trigger)) {
                 db.push(trigger, response);
             } else {
