@@ -24,7 +24,8 @@ client.on('ready', () => {
 
 client.on('message', async message => {
     if (message.author.bot) return;
-    if (db.has(message.content.trim().toLowerCase())) {
+    let checkContent = message.content.trim().toLowerCase();
+    if (checkConent && db.has(checkContent)) {
         let res_arr = db.get(message.content.trim().toLowerCase());
         message.channel.send(res_arr[Math.floor(Math.random() * res_arr.length)])
     }
