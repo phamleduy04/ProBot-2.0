@@ -58,16 +58,18 @@ client.on('message', async message => {
                 `)
             }
         }
+        else if (message.content.toLowerCase().startsWith('delete')) {
+            if (!args[0]) return message.channel.send('Nhập từ để xoá');
+            if (!db.has(args[0])) return message.channel.send('Từ không tồn tại');
+            await db.delete(args[0]);
+            message.channel.send('Thao tác thành công!');
+        }
     }
     else if (message.channel.id == setupchannelID) {
         if (message.content.includes(':')) {
             let args = message.content.split(':');
-            if (args.length !== 2) {
-                message.channel.send('Nhập theo cú pháp: `trigger:response` để setup');
-                return await message.react('❌');
-            }
             let trigger = args[0].toLowerCase().trim();
-            let response = args[1].trim();
+            let response = args.splice(1).join(':').trim();
             if (db.has(trigger)) {
                 db.push(trigger, response);
             } else {
